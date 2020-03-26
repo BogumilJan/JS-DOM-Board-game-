@@ -1,0 +1,187 @@
+/* style.css */
+
+
+
+/**************** Body styles and layout ********************************/
+
+body {
+        background-color: rgb(0, 32, 0);
+        background-image: url("background.jpg");
+        background-repeat: no-repeat;
+        background-size: 100%;
+}
+
+h1 {    
+        font: small-caps bold 30px/3 sans-serif;
+        color: #dae3c7;
+        text-align: center;
+}
+
+div {
+    
+}
+
+.wrapper {
+        display: flex;
+        justify-content: center;
+        margin-left: 5%;
+        margin-right: 5%;
+        width: auto;
+        padding-left: auto;
+        padding-right: auto;
+        height: auto;
+        background: rgba(0, 0, 0, .6);
+        background-size: 100%;
+}
+
+#side-container {
+        height: auto;
+        width: auto;
+        float: left;
+}
+
+#board-box {
+        float: left;
+        height: auto;
+        width: auto;
+        text-align: center;
+        margin: 10px;
+        border: 10px solid black;
+/*        font: small-caps bold 16px/1 sans-serif;*/
+}
+
+.score-box {
+        margin-top: 20px;
+        width: 230px;
+        height: 50%;
+/*        padding: 10px;*/
+        text-align: center;
+        border: 1px solid white;
+/*        border-width: 0.5px;  */
+/*        border-style: inset;*/
+/*        background-color: rgb(0, 250, 0);*/
+}
+
+
+#score-board-1 {
+/*    margin-left: 30px;*/
+        height: 45%;
+}
+
+#score-board-2 {
+        height: 45%;
+/*    margin-right: 30px;*/
+/*        margin-bottom: 20px;*/
+/*        height: 44.3%;*/
+}
+
+.score-container {
+/*        height: 100%;*/
+        width: 240px;
+/*        margin-top: 10px;*/
+        margin: 20px;
+        padding: 10px;
+        background-color: rgb(0, 0, 0);
+/*        border: 1px solid white;*/
+}
+
+
+
+#playerNameBracket {
+        word-break: break-all;
+}
+
+.bracket {
+    
+        width: auto;
+        margin-top: 25px;
+        color: #dae3c7;
+        font-family: sans-serif;
+        background-color: rgb(0, 0, 0);
+        font-size: 1.5em;
+}
+
+label {
+        color: #dae3c7;
+        font-family: sans-serif;
+        font-size: 0.9em;
+        margin-right: 3px; 
+}
+
+#life {
+        color: darkgreen;
+        border-style: none;
+}
+
+#lifePointsBracket {
+        padding: 5px;
+        font-size: 1.1em;
+}
+
+#weaponBracket {
+        padding: 10px;
+        
+}
+
+#scoreImage {
+        text-align: center;
+        margin-left: 30%;
+        margin-right: auto;
+        height: 60px;
+        width: 60px;
+}
+
+
+
+table {
+        border-collapse: collapse;
+        background-color: #e6ffcc;
+/*        margin: 15px;*/
+}
+
+td {
+        border: 1.5px solid #999;
+        width: 80px;
+        height: 80px;
+        text-align: center;
+/*        vertical-align: center;*/
+/*        box-sizing: border-box;*/
+       
+}
+
+td:hover {
+        background-color: rgb(144,200,144);
+        color: black;
+}
+
+
+/* ===== player ===== */
+
+.player {
+        background-color: dimgrey;
+/*        object-fit: fill;*/
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        word-wrap: inherit;
+        padding-top: auto; 
+        padding-bottom: auto;
+        text-align: center;
+        font-size: 70%;
+        font: small-caps normal 13px/1 sans-serif;
+}
+
+.block {
+        background-color: black;
+}
+
+.weapon {
+        background-color: rgb(50, 0, 0);
+        color: white;
+        overflow: auto;
+        word-wrap: break-all;
+        height: 100%;
+        width: 100%;
+/*        font: small-caps bold 16px/1 sans-serif;*/
+}
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Board game</title>
+        <meta charset="utf-8">
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+         <!-- Latest compiled and minified CSS -->
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">-->
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"> </script> 
+        
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        
+        <link href="style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        
+        <h1>THE BOARD WIPER</h1>
+
+        <div class="wrapper">
+            <div id="side-container">
+<!--                    <div class="score-box">-->
+<!--                        <h1>Player One</h1>-->
+                        <div id="score-board-1" class="score-container">
+                        
+                        </div>
+<!--                    </div>  -->
+<!--                    <div class="score-box">-->
+<!--                        <h1>Player Two</h1>-->
+                        <div id="score-board-2" class="score-container">
+             
+                        </div>  
+<!--                    </div>-->
+            </div>
+            <div id="board-box">
+                        <div id="app">
+                        
+                        </div>  
+            </div>
+        </div>
+            
+        <script type="module">
+                import { App } from './App.js';
+                import { Score } from './Score.js';
+
+            $(function() {
+               let playerOneName = 'player one ahkdf hfdkjhs';/*prompt("Please write down your name", "Player One");*/
+               let playerTwoName = 'player_two';/*prompt("Please write down your name", "Player Two");*/
+                console.log(playerOneName);    
+                var scoreP1 = new Score('score-board-1', playerOneName);
+                var scoreP2 = new Score('score-board-2', playerTwoName);
+                var app = new App('app', 10, playerOneName, playerTwoName);
+                console.log(app);
+            });
+            
+            $(function() {
+                
+            });
+        </script>
+    </body>
+</html>
