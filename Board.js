@@ -83,7 +83,9 @@ export class Board {
 
     getSquare(row, col) {
         // test for existing square if is outside return null
-        return this.model[row][col];
+        if(row-1 >this.size || col-1 >this.size) {
+            return false;
+        } else { return this.model[row][col]; }
     }
 
     _getRandomPosition() {
@@ -97,42 +99,43 @@ export class Board {
     _playerVisualGuide(pos) {
         
         const sqPlayer = this.getSquare(pos.row, pos.col);
+//        let square = this.getSquare(row, col);
         
             let u;
                 for (u=1; u<4; u++) {
-                    
-                    if(!sqPlayer.blockObj) {
+                    let guideUp = this.getSquare(pos.row-u, pos.col);
+                    if(!guideUp.blockObj) {
                         // if real square progress - getSquare test
-                        let guideUp = this.getSquare(pos.row-u, pos.col);
+//                        let guideUp = this.getSquare(pos.row-u, pos.col);
                         $('#'+guideUp.id).addClass('guide');
                     } else { break; }
                 }
         
             let d;
                 for (d=1; d<4; d++) {
-                    
-                    if(!sqPlayer.blockObj) {
-                       let guideDown = this.getSquare(pos.row+d, pos.col);
+                    let guideDown = this.getSquare(pos.row+d, pos.col);
+                    if(!guideDown.blockObj) {
+                       
                         $('#'+guideDown.id).addClass('guide');
-                    } else { continue; }
+                    } else { break; }
                 } 
 
             let l;
                 for (l=1; l<4; l++) {
-                    
-                    if(!sqPlayer.blockObj) {
-                       let guideLeft = this.getSquare(pos.row, pos.col-l);
+                    let guideLeft = this.getSquare(pos.row, pos.col-l);
+                    if(!guideLeft.blockObj) {
+                       
                         $('#'+guideLeft.id).addClass('guide');
-                    } else { continue; }
+                    } else { break; }
                 } 
 
             let r;
                 for (r=1; r<4; r++) {
-                    
-                    if(!sqPlayer.blockObj) {
-                       let guideRight = this.getSquare(pos.row, pos.col+r);
+                    let guideRight = this.getSquare(pos.row, pos.col+r);
+                    if(!guideRight.blockObj) {
+                       
                         $('#'+guideRight.id).addClass('guide');
-                    } else { continue; }
+                    } else { break; }
                 } 
     }
     

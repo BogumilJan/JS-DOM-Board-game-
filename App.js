@@ -53,7 +53,7 @@ import { Weapon } from './Weapon.js';
     _initPlayers() {
             let playerOne = new Player(this.playerOne);
             let playerTwo = new Player(this.playerTwo);
-            console.log(this.playerTwo);
+//            console.log(this.playerTwo);
             this.board.playerOne = playerOne;
             this.board.playerTwo = playerTwo;
             this.board.addPlayerOne(playerOne);
