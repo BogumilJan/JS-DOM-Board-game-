@@ -21,7 +21,9 @@ export class Board {
         this.clickCol = 0;
         this.blockObjArray = [];
         this.weapon = null;
+        this.playerObjArray = [];
         this.playerPosition = [];
+//        this.newGame();
 //        this.movePlayer();
     }
 
@@ -57,8 +59,7 @@ export class Board {
 /*Player control click event function *******************************/
         
         let board = this;
-        let playerPos = this.player;
-//         $(tableElem).click(function(event) {
+
         $(tableElem).on('click', 'td', function(event) {
             console.log(event.target.id);
             let clickId = event.currentTarget.id;
@@ -70,6 +71,7 @@ export class Board {
 
                     if(board._checkValidMove(pos)) {
                         board._movePlayer(pos);
+//                        board._gameRound();
                         }
         });
         
@@ -80,7 +82,7 @@ export class Board {
      
 
     getSquare(row, col) {
-        
+        // test for existing square if is outside return null
         return this.model[row][col];
     }
 
@@ -91,7 +93,49 @@ export class Board {
 
         return { row: r, col: c };
     }
+    
+    _playerVisualGuide(pos) {
+        
+        const sqPlayer = this.getSquare(pos.row, pos.col);
+        
+            let u;
+                for (u=1; u<4; u++) {
+                    
+                    if(!sqPlayer.blockObj) {
+                        // if real square progress - getSquare test
+                        let guideUp = this.getSquare(pos.row-u, pos.col);
+                        $('#'+guideUp.id).addClass('guide');
+                    } else { break; }
+                }
+        
+            let d;
+                for (d=1; d<4; d++) {
+                    
+                    if(!sqPlayer.blockObj) {
+                       let guideDown = this.getSquare(pos.row+d, pos.col);
+                        $('#'+guideDown.id).addClass('guide');
+                    } else { continue; }
+                } 
 
+            let l;
+                for (l=1; l<4; l++) {
+                    
+                    if(!sqPlayer.blockObj) {
+                       let guideLeft = this.getSquare(pos.row, pos.col-l);
+                        $('#'+guideLeft.id).addClass('guide');
+                    } else { continue; }
+                } 
+
+            let r;
+                for (r=1; r<4; r++) {
+                    
+                    if(!sqPlayer.blockObj) {
+                       let guideRight = this.getSquare(pos.row, pos.col+r);
+                        $('#'+guideRight.id).addClass('guide');
+                    } else { continue; }
+                } 
+    }
+    
 
     addBlock(b) {
         
@@ -120,10 +164,11 @@ export class Board {
 //        console.log(this.goldObjArray);
     }
 
-    addPlayer(player) { 
+    addPlayerOne(player) { 
         
-        let pos = this._getRandomPosition();          
-        let sq = this.getSquare(pos.row, pos.col); 
+        let pos = this._getRandomPosition(); 
+        let sq = this.getSquare(pos.row, pos.col);
+        
         while(sq.blockObj || sq.weaponObj) {
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
@@ -132,13 +177,64 @@ export class Board {
         sq.player = player;
         this.position = pos;                                 
         this.player = player;
-        console.log(this.playerPosition);
+        this.playerOne = player;
+        this._playerVisualGuide(pos);
+        this.playerObjArray.push(player);
+        console.log(pos);
+    }
+    
+    addPlayerTwo(player) { 
+        
+        let pos = this._getRandomPosition(); 
+        let sq = this.getSquare(pos.row, pos.col);
+        let fightPos = this._nearbyPlayerDetection(pos);
+        
+        while(sq.blockObj || sq.weaponObj || sq.playerObj || fightPos) {
+            pos = this._getRandomPosition(); 
+            sq = this.getSquare(pos.row, pos.col);
+        }
+        
+        this.playerPosition.push(pos);
+        sq.player = player;                               
+        this.playerTwo = player;
+        this._playerVisualGuide(pos);
+        this.playerObjArray.push(player);
+        consloe.log(pos);
+    }
+    
+    _nearbyPlayerDetection(pos) {
+        
+        let playerOnePos = this.position;
+        let validated = false;
+        
+        switch(this.position) {
+            case {row: pos.row, col: pos.col+1}:
+                validated = true;
+                console.log('match made');
+                    break;
+            case {row: pos.row, col: pos.col-1}:
+                validated = true;
+                console.log('match made');
+                    break;
+            case {row: pos.row-1, col: pos.col}:
+                validated = true;
+                console.log('match made');
+                    break;
+            case {row: pos.row+1, col: pos.col}:
+                validated = true;
+                console.log('match made');
+                    break;
+                case pos:
+                validated = true;
+        }
+        return validated;
     }
                                                                  
     _checkValidMove(pos) {
         
-        let clickLocation = pos;           
+        let clickLocation = pos;
         let playerLocation = this.position;
+        
         let plsq = this.getSquare(playerLocation.row, playerLocation.col);
         let plObj = this.player;
         let weaponObj = this.weapon;
@@ -198,6 +294,51 @@ export class Board {
         playerSq.player = player;
         this.player = playerSq.player;
         this.position = clsqPos;
+        
+        switch(this.player) {
+        case this.playerOne:
+            this.player = this.playerTwo;
+            this.position = this.playerTwo.position;
+            this._playerVisualGuide();
+                break;
+        case this.playerTwo:
+            this.player = this.playerOne;
+            this.position = this.playerOne.position;
+            this._playerVisualGuide();
+                break;
+        } 
+    }
+    
+    newGame() {
+       // full screen massage pop up 
+        this.player = this.playerOne;
+        this.position = this.playerOne.position;
+        
+    }
+    
+    gameRestart() {
+        
+        let firstTime = (this.elem === null);
+        this._createTable(firstTime);
+        this._setRandomBlocked();
+        this._setRandomCashes();
+
+        if (firstTime) { 
+            // Use 'keydown' because Chrome and Safari don't generate 'keypress'
+            $(document).on('keydown', Board.prototype.onKeydownEvent.bind(this));
+        }
+    
+        var sq = this._getRandomEmptySquare();
+        sq.player = new Player(this.playerName, 0);
+    } 
+    
+    _gameRound() {
+        
+        
+    }
+    
+    _fightMode() {
+        
     }
      
 }

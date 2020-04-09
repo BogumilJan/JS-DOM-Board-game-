@@ -1,5 +1,7 @@
 /* App.js */
 
+"use strict";
+
 import { Board } from './Board.js';
 import { Player } from './Player.js';
 import { Weapon } from './Weapon.js'; 
@@ -18,6 +20,7 @@ import { Weapon } from './Weapon.js';
         this._initBlock();
         this._initWeapon();
         this._initPlayers();
+        this._initNewGame();
       
     }
 
@@ -30,11 +33,7 @@ import { Weapon } from './Weapon.js';
         
             $('#'+divId).append(this.elem);
     }
-     
-     _playerName() {
-         let p = this.player;   
-     }
-     
+   
      _initBlock() {
          let b = true;
         for (let i=0; i<5; i++) {
@@ -57,8 +56,11 @@ import { Weapon } from './Weapon.js';
             console.log(this.playerTwo);
             this.board.playerOne = playerOne;
             this.board.playerTwo = playerTwo;
-            this.board.addPlayer(playerOne);
-            this.board.addPlayer(playerTwo);
+            this.board.addPlayerOne(playerOne);
+            this.board.addPlayerTwo(playerTwo);
         }
+    _initNewGame() {
+            this.board.newGame();
+    }
     
 }

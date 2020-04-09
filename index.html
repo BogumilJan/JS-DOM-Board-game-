@@ -25,7 +25,7 @@
 
     <body>
         
-        <h1>THE BOARD WIPER</h1>
+        <h1>TABULA HERBA</h1>
 
         <div class="wrapper">
             <div id="side-container">
@@ -47,23 +47,27 @@
                         
                         </div>  
             </div>
+            <div id="restart">
+                <button onclick="test()" class="w3-button w3-black w3-round">restart</button>
+            </div>
         </div>
             
         <script type="module">
                 import { App } from './App.js';
                 import { Score } from './Score.js';
 
-            $(function() {
+            let game = $(function game() {
                let playerOneName = 'player one ahkdf hfdkjhs';/*prompt("Please write down your name", "Player One");*/
                let playerTwoName = 'player_two';/*prompt("Please write down your name", "Player Two");*/
-                console.log(playerOneName);    
+//                console.log(playerOneName);    
                 var scoreP1 = new Score('score-board-1', playerOneName);
                 var scoreP2 = new Score('score-board-2', playerTwoName);
                 var app = new App('app', 10, playerOneName, playerTwoName);
-                console.log(app);
+//                console.log(app);
             });
             
-            $(function() {
+            $(function test(game) {
+//                $('#restart').createElement
                 
             });
         </script>

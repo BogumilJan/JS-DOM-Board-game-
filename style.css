@@ -32,6 +32,8 @@ div {
         height: auto;
         background: rgba(0, 0, 0, .6);
         background-size: 100%;
+/*        border: 2px solid black;*/
+        border-radius: 5px;
 }
 
 #side-container {
@@ -47,6 +49,7 @@ div {
         text-align: center;
         margin: 10px;
         border: 10px solid black;
+        border-radius: 5px;
 /*        font: small-caps bold 16px/1 sans-serif;*/
 }
 
@@ -83,6 +86,7 @@ div {
         padding: 10px;
         background-color: rgb(0, 0, 0);
 /*        border: 1px solid white;*/
+        border-radius: 5px;
 }
 
 
@@ -136,7 +140,8 @@ label {
 table {
         border-collapse: collapse;
         background-color: #e6ffcc;
-/*        margin: 15px;*/
+        padding: 5px;
+/*        margin: 5px;*/
 }
 
 td {
@@ -144,14 +149,14 @@ td {
         width: 80px;
         height: 80px;
         text-align: center;
+/*        margin: 5px;*/
 /*        vertical-align: center;*/
 /*        box-sizing: border-box;*/
        
 }
 
 td:hover {
-        background-color: rgb(144,200,144);
-        color: black;
+/*       border: 2px solid #206040;*/
 }
 
 
@@ -183,5 +188,9 @@ td:hover {
         height: 100%;
         width: 100%;
 /*        font: small-caps bold 16px/1 sans-serif;*/
+}
+
+.guide {
+        box-shadow: 3px 3px 6px black, 0px 0px 6px black;
 }
 
