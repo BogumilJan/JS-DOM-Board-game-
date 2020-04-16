@@ -181,12 +181,13 @@ td:hover {
 }
 
 .weapon {
-        background-color: rgb(50, 0, 0);
-        color: white;
+/*        background-color: rgb(50, 0, 0);*/
+/*        color: white;*/
         overflow: auto;
         word-wrap: break-all;
         height: 100%;
         width: 100%;
+/*        object-fit: fill;*/
 /*        font: small-caps bold 16px/1 sans-serif;*/
 }
 

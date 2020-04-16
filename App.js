@@ -42,10 +42,10 @@ import { Weapon } from './Weapon.js';
     } 
      
     _initWeapon() {
-        for (let i=0; i<5; i++) {
-            let valueRandom = Math.floor(Math.random() * 10);
-            console.log(valueRandom);
-            let w = new Weapon(valueRandom);
+        for (let i=0; i<4; i++) {
+            console.log('Number '+i);
+            let w = new Weapon(i);
+            console.log(w);
             this.board.addWeapon(w);
         }
     }

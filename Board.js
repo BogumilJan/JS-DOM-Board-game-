@@ -68,7 +68,7 @@ export class Board {
                 row: Number(arrayId[3]), 
                 col: Number(arrayId[5])
             };
-
+            console.log(clickId);
                     if(board._checkValidMove(pos)) {
                         board._movePlayer(pos);
 //                        board._gameRound();
@@ -83,9 +83,13 @@ export class Board {
 
     getSquare(row, col) {
         // test for existing square if is outside return null
-        if(row-1 >this.size || col-1 >this.size) {
-            return false;
+//        row-1 > this.size || col-1 > this.size
+        let error = this.model[row][col];
+        if(typeof error == 'undefined') {
+           return true; 
         } else { return this.model[row][col]; }
+        
+//        return this.model[row][col];
     }
 
     _getRandomPosition() {
@@ -104,38 +108,55 @@ export class Board {
             let u;
                 for (u=1; u<4; u++) {
                     let guideUp = this.getSquare(pos.row-u, pos.col);
+                    if(guideUp === undefined) {continue;} 
+                    else { 
                     if(!guideUp.blockObj) {
                         // if real square progress - getSquare test
 //                        let guideUp = this.getSquare(pos.row-u, pos.col);
                         $('#'+guideUp.id).addClass('guide');
-                    } else { break; }
+                    } 
+                    else { break; }
+                    }
                 }
+                
         
             let d;
                 for (d=1; d<4; d++) {
                     let guideDown = this.getSquare(pos.row+d, pos.col);
+                    if(guideDown === undefined) {continue;} 
+                    else { 
                     if(!guideDown.blockObj) {
                        
                         $('#'+guideDown.id).addClass('guide');
-                    } else { break; }
+                    } 
+                    else { break; }
+                    }
                 } 
 
             let l;
                 for (l=1; l<4; l++) {
                     let guideLeft = this.getSquare(pos.row, pos.col-l);
+                    if(guideLeft === undefined) {continue;} 
+                    else { 
                     if(!guideLeft.blockObj) {
                        
                         $('#'+guideLeft.id).addClass('guide');
-                    } else { break; }
+                    } 
+                    else { break; }
+                    }
                 } 
 
             let r;
                 for (r=1; r<4; r++) {
                     let guideRight = this.getSquare(pos.row, pos.col+r);
+                    if(guideRight === undefined) {continue;} 
+                    else { 
                     if(!guideRight.blockObj) {
                        
                         $('#'+guideRight.id).addClass('guide');
-                    } else { break; }
+                    } 
+                    else { break; }
+                    }
                 } 
     }
     
@@ -162,6 +183,7 @@ export class Board {
             sq = this.getSquare(pos.row, pos.col);
         }
         sq.weapon = weapon;
+        console.log(weapon);
         this.weapon = weapon;
 //        this.goldObjArray.push(sq.location);
 //        console.log(this.goldObjArray);
@@ -202,36 +224,54 @@ export class Board {
         this.playerTwo = player;
         this._playerVisualGuide(pos);
         this.playerObjArray.push(player);
-        consloe.log(pos);
+        console.log(pos);
     }
     
-    _nearbyPlayerDetection(pos) {
+    _nearbyPlayerDetection(playerTwoPos) {
         
-        let playerOnePos = this.position;
+        let pos = this.position;
         let validated = false;
         
-        switch(this.position) {
-            case {row: pos.row, col: pos.col+1}:
-                validated = true;
-                console.log('match made');
-                    break;
-            case {row: pos.row, col: pos.col-1}:
-                validated = true;
-                console.log('match made');
-                    break;
-            case {row: pos.row-1, col: pos.col}:
-                validated = true;
-                console.log('match made');
-                    break;
-            case {row: pos.row+1, col: pos.col}:
-                validated = true;
-                console.log('match made');
-                    break;
-                case pos:
-                validated = true;
-        }
-        return validated;
+        let leftSquare = { row: pos.row, col: pos.col-1 };
+        let rightSquare = { row: pos.row, col: pos.col+1 };
+        let upperSquare = { row: pos.row-1, col: pos.col };
+        let lowerSquare = { row: pos.row+1, col: pos.col };
+        
+//        if(leftSquare = playerTwoPos) 
+//           { return validated = true; }
+//        else if(rightSquare = playerTwoPos) 
+//           { return validated = true; }
+//        else if(upperSquare = playerTwoPos) 
+//           { return validated = true; }
+//        else if(lowerSquare = playerTwoPos)
+//           { return validated = true; }
+//        
+//        return validated;
+        
+//        switch(this.position) {
+//            case {row: pos.row, col: pos.col+1}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//            case {row: pos.row, col: pos.col-1}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//            case {row: pos.row-1, col: pos.col}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//            case {row: pos.row+1, col: pos.col}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//                case pos:
+//                validated = true;
+//        }
+        
     }
+    
+    _
                                                                  
     _checkValidMove(pos) {
         
@@ -239,7 +279,7 @@ export class Board {
         let playerLocation = this.position;
         
         let plsq = this.getSquare(playerLocation.row, playerLocation.col);
-        let plObj = this.player;
+//        let plObj = this.player;
         let weaponObj = this.weapon;
         console.log(pos.row + ' testing valid move');
         let clsq = this.getSquare(pos.row, pos.col);
@@ -278,6 +318,11 @@ export class Board {
                 playerGo = true;    
             }
         }
+        
+        if(this._nearbyPlayerDetection(pos)) {
+            this._startFightMode(pos);
+        }
+        
         return playerGo;    
     }
     
@@ -302,12 +347,12 @@ export class Board {
         case this.playerOne:
             this.player = this.playerTwo;
             this.position = this.playerTwo.position;
-            this._playerVisualGuide();
+//            this._playerVisualGuide();
                 break;
         case this.playerTwo:
             this.player = this.playerOne;
             this.position = this.playerOne.position;
-            this._playerVisualGuide();
+//            this._playerVisualGuide();
                 break;
         } 
     }
@@ -340,12 +385,38 @@ export class Board {
         
     }
     
-    _fightMode() {
+    _startFightMode() {
         
     }
      
 }
 
+//let d;
+//                for (d=1; d<4; d++) {
+//                    let guideDown = this.getSquare(pos.row+d, pos.col);
+//                    if(!guideDown.blockObj) {
+//                       
+//                        $('#'+guideDown.id).addClass('guide');
+//                    } else { break; }
+//                } 
+//
+//            let l;
+//                for (l=1; l<4; l++) {
+//                    let guideLeft = this.getSquare(pos.row, pos.col-l);
+//                    if(!guideLeft.blockObj) {
+//                       
+//                        $('#'+guideLeft.id).addClass('guide');
+//                    } else { break; }
+//                } 
+//
+//            let r;
+//                for (r=1; r<4; r++) {
+//                    let guideRight = this.getSquare(pos.row, pos.col+r);
+//                    if(!guideRight.blockObj) {
+//                       
+//                        $('#'+guideRight.id).addClass('guide');
+//                    } else { break; }
+//                } 
 
 //    _checkBlock(blockClick) {
 //        let blockArray = this.blockObjArray;
@@ -374,5 +445,25 @@ export class Board {
 //        }
 //        return validation;
 //    }
-
+//
+//switch(this.position) {
+//            case {row: pos.row, col: pos.col+1}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//            case {row: pos.row, col: pos.col-1}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//            case {row: pos.row-1, col: pos.col}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//            case {row: pos.row+1, col: pos.col}:
+//                validated = true;
+//                console.log('match made');
+//                    break;
+//                case pos:
+//                validated = true;
+//        }
 

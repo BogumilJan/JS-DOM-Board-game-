@@ -66,7 +66,6 @@ export class Square {
     set weapon(weapon) {
         
             this.weaponObj = weapon;
-            console.log(weapon);
             weapon.position = this.location;
             weapon.id = this.id;
             $('#'+this.id).append(weapon.elem);
