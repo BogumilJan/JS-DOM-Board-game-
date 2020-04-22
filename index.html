@@ -31,13 +31,13 @@
             <div id="side-container">
 <!--                    <div class="score-box">-->
 <!--                        <h1>Player One</h1>-->
-                        <div id="score-board-1" class="score-container">
+                        <div id="1" class="score-container">
                         
                         </div>
 <!--                    </div>  -->
 <!--                    <div class="score-box">-->
 <!--                        <h1>Player Two</h1>-->
-                        <div id="score-board-2" class="score-container">
+                        <div id="2" class="score-container">
              
                         </div>  
 <!--                    </div>-->
@@ -60,8 +60,8 @@
                let playerOneName = 'player one ahkdf hfdkjhs';/*prompt("Please write down your name", "Player One");*/
                let playerTwoName = 'player_two';/*prompt("Please write down your name", "Player Two");*/
 //                console.log(playerOneName);    
-                var scoreP1 = new Score('score-board-1', playerOneName);
-                var scoreP2 = new Score('score-board-2', playerTwoName);
+                var scoreP1 = new Score('1', playerOneName);
+                var scoreP2 = new Score('2', playerTwoName);
                 var app = new App('app', 10, playerOneName, playerTwoName);
 //                console.log(app);
             });

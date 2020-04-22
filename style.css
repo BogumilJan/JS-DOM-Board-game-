@@ -17,8 +17,21 @@ h1 {
         text-align: center;
 }
 
+h5 {
+        text-align: left;
+        
+}
+
+h6 {
+        text-align: right;
+}
+
 div {
     
+}
+
+button {
+    margin: 3px;
 }
 
 .wrapper {
@@ -89,9 +102,13 @@ div {
         border-radius: 5px;
 }
 
+/*Scorebord elements starts here*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
 
+#playerNameBracket1 {
+        word-break: break-all;
+}
 
-#playerNameBracket {
+#playerNameBracket2 {
         word-break: break-all;
 }
 
@@ -117,25 +134,72 @@ label {
         border-style: none;
 }
 
-#lifePointsBracket {
-        padding: 5px;
+#lifePointsBracket1 {
+        padding: 3px;
         font-size: 1.1em;
 }
 
-#weaponBracket {
+#weaponBracket1 {
         padding: 10px;
+/*        background-color: aqua;*/
         
 }
 
 #scoreImage {
-        text-align: center;
-        margin-left: 30%;
-        margin-right: auto;
-        height: 60px;
-        width: 60px;
+
+        margin-left: 70%;
+        margin-right: 10%;
+        width: 30%;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+       
+}
+
+#lifePointsBracket2 {
+        padding: 3px;
+        font-size: 1.1em;
+}
+
+#weaponBracket2 {
+        padding: 10px;
+/*                background-color: aqua;*/
+
 }
 
 
+#fireBracket1 {
+/*
+        background-color: azure;
+        padding-left: 50%;
+        padding-right: auto;
+        object-fit: contain;
+*/
+}
+
+#fireButton1 {
+        margin-left: 20%;
+        
+}
+
+#escapeButton1 {
+    
+}
+
+#fireBracket2 {
+        
+}
+
+#fireButton2 {
+        margin-left: 20%;
+}
+
+#escapeButton2 {
+    
+}
+
+
+/*\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\*/
 
 table {
         border-collapse: collapse;

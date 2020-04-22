@@ -15,6 +15,7 @@
 
         // View
         this.elem = this._createView();
+        this.defaultWeapon = this._defaultWeapon();
     }
      
     _createView() {
@@ -25,6 +26,29 @@
             
         return elem;
     }
+     
+    get weapon() {
+           return  
+    }
+     
+    set weapon(weaponObj) {
+        
+//            $('#'+this.name).
+            this.weapon = weaponObj;
+        
+//            this.weaponObj = weapon;
+//            weapon.position = this.location;
+//            weapon.id = this.id;
+//            $('#'+this.id).append(weaponObj.elem);
+
+    
+    }
+     
+    _defaultWeapon() {
+        this.weapon = 10;
+        this.currentDamage = 10;
+    }
+    
      
     
 

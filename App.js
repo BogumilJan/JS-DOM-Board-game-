@@ -43,9 +43,9 @@ import { Weapon } from './Weapon.js';
      
     _initWeapon() {
         for (let i=0; i<4; i++) {
-            console.log('Number '+i);
+//            console.log('Number '+i);
             let w = new Weapon(i);
-            console.log(w);
+//            console.log(w);
             this.board.addWeapon(w);
         }
     }
@@ -60,7 +60,7 @@ import { Weapon } from './Weapon.js';
             this.board.addPlayerTwo(playerTwo);
         }
     _initNewGame() {
-            this.board.newGame();
+//            this.board.newGame();
     }
     
 }

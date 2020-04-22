@@ -17,22 +17,12 @@
         this.currentDamage = null;
         // 
     }
-    
-    get idSetup() {
-
-    } 
-    
-    
-    set idSetup(id) {
-        return ;
-        
-    }
      
     _wristSlap() {
         let elem = $('<div>').addClass('weapon').html('<img src="wrist.jpg" style="height:100%; width:100%;">');
         let wrist = 0;
         this.weapon = wrist;
-        this.currentDamage = 10;
+        this.currentDamage = 20;
         console.log(this.currentDamage);
         return elem;
     }
@@ -41,7 +31,7 @@
         let elem = $('<div>').addClass('weapon').html('<img src="choke.jpg" style="height:100%; width:100%;">');
         let choke = 1;
         this.weapon = choke;
-        this.currentDamage = 20;
+        this.currentDamage = 30;
         console.log(this.currentDamage);
         return elem;
     }
@@ -50,7 +40,7 @@
         let elem = $('<div>').addClass('weapon').html('<img src="bat.jpg" style="height:100%; width:100%;">');
         let bat = 2;
         this.weapon = bat;
-        this.currentDamage = 30;
+        this.currentDamage = 40;
         console.log(this.currentDamage);
         return elem;
     }
@@ -59,7 +49,7 @@
         let elem = $('<div>').addClass('weapon').html('<img src="gun.jpg" style="height:100%; width:100%;">');
         let gun = 3;
         this.weapon = gun;
-        this.currentDamage = 50;
+        this.currentDamage = 60;
         console.log(this.currentDamage);
         return elem;
     }

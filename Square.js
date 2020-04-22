@@ -24,6 +24,8 @@ export class Square {
             let elem = $('<td>').attr('id', this.id);
             return elem;
     }
+    
+    
 
     get player() {
         
@@ -36,9 +38,11 @@ export class Square {
             if (player) {
                 $('#'+this.id).empty();
                 $('#'+this.id).append(player.elem);
-                player.position = this.location; 
+                player.position = this.location;
+                
                     if(this.weaponObj) { 
                         player.weapon = this.weaponObj;
+                        console.log(player.weapon)
                         $('#'+this.id).empty();
                         $('#'+this.id).append(player.elem);     
                         }
