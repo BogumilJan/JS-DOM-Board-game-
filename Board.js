@@ -283,23 +283,31 @@ export class Board {
 //        let clElem = weaponObj.position;
 //        console.log(clickIdString);
         let clBlock = 0;
+//       
+//            let clRowUp = clickLocation.row - 1;
+//            let clRowDown = clickLocation.row + 1;
+//            let clColLeft = clickLocation.col + 1;
+//            let clColRight = clickLocation.col - 1;
+        
         let clRow = clickLocation.row;
-        let clRowUp = clickLocation.row + 1;
-        let clRowDown = clickLocation.row - 1;
+        let clRowUp = clickLocation.row;
+        let clRowDown = clickLocation.row;
+        let clColLeft = clickLocation.col;
+        let clColRight = clickLocation.col;
         let clCol = clickLocation.col;
-        let clColLeft = clickLocation.col + 1;
-        let clColRight = clickLocation.col - 1;
         let plRow = playerLocation.row;
         let plCol = playerLocation.col;
-        let playerGo = null;    
+        let playerGo = null; 
         
+        let i;
+        for(i=1;i<=3;i++) {
 /*Vertical movement verification logic ****************************************/
         
         if(!clsq.block) {
-        if(clRowUp == plRow && clCol == plCol) {
+        if((clRowUp - i) == plRow && clCol == plCol) {
                 playerGo = true;
             }
-        if(clRowDown == plRow && clCol == plCol)  {
+        if((clRowDown + i) == plRow && clCol == plCol)  {
                 playerGo = true;    
             }
         }    
@@ -307,14 +315,14 @@ export class Board {
 /*Horizontal movement verification logic *************************************/  
         
         if(!clsq.block) {
-         if(clColLeft == plCol && clRow == plRow) {
+         if((clColLeft - i) == plCol && clRow == plRow) {
                 playerGo = true;
             }
-        if(clColRight == plCol && clRow == plRow) {
+        if((clColRight + i) == plCol && clRow == plRow) {
                 playerGo = true;    
             }
         }
-    
+        }
         if(clsq.weaponObj) {
            let playerObj = this.player;
             playerObj.weapon = clsq.weaponObj;
