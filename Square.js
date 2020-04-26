@@ -11,7 +11,7 @@ export class Square {
             this.id = `sq_${row}_${col}`; 
             this.location = {row: row, col: col};
             this.playerObj = null;
-            this.blockObj = null;
+            this._blockObj = null;
             this.weaponObj = null;
             this.col = col;
             this.row = row;
@@ -42,7 +42,7 @@ export class Square {
                 
                     if(this.weaponObj) { 
                         player.weapon = this.weaponObj;
-                        console.log(player.weapon)
+//                        console.log(player.weapon)
                         $('#'+this.id).empty();
                         $('#'+this.id).append(player.elem);     
                         }
@@ -51,12 +51,12 @@ export class Square {
  
     get block() {
         
-            return this.blockObj;
+            return this._blockObj;
     }
     
     set block(block) {
         
-            this.blockObj = block;
+            this._blockObj = block;
             if (block) {
                 $('#'+this.id).addClass('block');
                 } 

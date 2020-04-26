@@ -12,12 +12,16 @@ export class Board {
 
     constructor(size) {
         this.size = size;
-        this.position = {row: -1, col: -1};// player's position (row/col)
-        this.model = this._createModel();  // a 2-dim array of Square objs
-        this.elem = this._createView();  // a <table> elem
+        this.position = {row: -1, col: -1};
+        this.model = this._createModel();
+        this.elem = this._createView();
         this.player = null;
         this.playerOne = null;
         this.playerTwo = null;
+        this.scoreBoard_P1 = null;
+        this.scoreBoard_P2 = null;
+        this.playerOneWeapon = null;
+        this.playerTwoWeapon = null;
         this.clickCol = 0;
         this.blockObjArray = [];
         this.weapon = null;
@@ -40,8 +44,6 @@ export class Board {
 
         return model;
     }
-    
-    
 
     _createView() {
         let tableElem = $('<table>');
@@ -70,8 +72,7 @@ export class Board {
             };
                     if(board._checkValidMove(pos)) {
                         board._movePlayer(pos);
-//                        board._gameRound();
-                        }
+                    }
         });
         
         return tableElem;
@@ -82,13 +83,12 @@ export class Board {
 
     getSquare(row, col) {
         // test for existing square if is outside return null
-//        row-1 > this.size || col-1 > this.size
-        let error = this.model[row][col];
-        if(error === undefined) {
-           return true; 
-        } else { return this.model[row][col]; }
-        
-//        return this.model[row][col];
+        // if more tgen zero x < 0
+        if(row > this.size || col > this.size || row < 0 || col < 0) {
+            return false;
+        } else {
+            return this.model[row][col];
+        }
     }
 
     _getRandomPosition() {
@@ -154,27 +154,27 @@ export class Board {
         
         let pos = this._getRandomPosition(); 
         let sq = this.getSquare(pos.row, pos.col);
-        while(sq.blockObj) {
+        while(sq.block) {
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
         }
         sq.block = b;
         this.blockObjArray.push(sq.location);
-//        console.log(this.blockObjArray);
+//        console.log(this.scoreBoard_P1);
     }
     
     addWeapon(weapon) {
         
         let pos = this._getRandomPosition(); 
         let sq = this.getSquare(pos.row, pos.col);
-        while(sq.blockObj || sq.weaponObj) {
+        while(sq.block || sq.weaponObj) {
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
         }
         sq.weapon = weapon;
+    
 //        this.weapon = weapon;
-//        this.goldObjArray.push(sq.location);
-//        console.log(this.goldObjArray);
+//        console.log(weapon.power);
     }
 
     addPlayerOne(player) { 
@@ -182,7 +182,7 @@ export class Board {
         let pos = this._getRandomPosition(); 
         let sq = this.getSquare(pos.row, pos.col);
         
-        while(sq.blockObj || sq.weaponObj) {
+        while(sq.block || sq.weaponObj) {
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
         }
@@ -191,7 +191,7 @@ export class Board {
         this.position = pos;                                 
         this.player = player;
         this.playerOne = player;
-//        this._playerVisualGuide(pos);
+        this._playerVisualGuide(pos);
         this.playerObjArray.push(player);
     }
     
@@ -201,7 +201,8 @@ export class Board {
         let sq = this.getSquare(pos.row, pos.col);
         let fightPos = this._nearbyPlayerDetection(pos);
         
-        while(sq.blockObj || sq.weaponObj || sq.playerObj || fightPos) {
+        while(sq.block || sq.weaponObj || sq.playerObj || fightPos) {
+            console.log('playerTwo positioning method worked')
             pos = this._getRandomPosition(); 
             sq = this.getSquare(pos.row, pos.col);
         }
@@ -226,11 +227,6 @@ export class Board {
         let lowerSquare = pos.row+1;
         
         console.log(this.position);
-          
-//        let leftSquare = { row: pos.row, col: pos.col-1 };
-//        let rightSquare = { row: pos.row, col: pos.col+1 };
-//        let upperSquare = { row: pos.row-1, col: pos.col };
-//        let lowerSquare = { row: pos.row+1, col: pos.col };
         
         if(playerTwoRow == pos.row && (playerTwoCol == leftSquare || playerTwoCol == rightSquare)) {
         validated = true;
@@ -245,12 +241,39 @@ export class Board {
         return validated;
     }
     
-    
-                                                                 
+    _nearbyPlayerDetectionFight(clickSq, oponent) {
+        
+        let oponentPos = oponent.position;
+//        let playerTwoRow = pos.row;
+//        let playerTwoCol = pos.col;
+        let validated = false;
+        let leftSquare = clickSq.col-1;
+        let rightSquare = clickSq.col+1;
+        let upperSquare = clickSq.row-1;
+        let lowerSquare = clickSq.row+1;
+        
+        console.log(this.position);
+        
+        
+        
+        if(oponentPos.row == clickSq.row && (oponentPos.col == leftSquare || oponentPos.col == rightSquare)) {
+        validated = true;
+        console.log('match made');
+        }
+            
+        if(oponentPos.col == clickSq.col && (oponentPos.row == upperSquare || oponentPos.row == lowerSquare)) {
+        validated = true;
+        console.log('match made');  
+        }
+
+        return validated;
+    }
+                                                                     
     _checkValidMove(pos) {
         
         let clickLocation = pos;
         let playerLocation = this.position;
+//        console.log(this.player);
         
         let plsq = this.getSquare(playerLocation.row, playerLocation.col);
 //        let plObj = this.player;
@@ -287,20 +310,44 @@ export class Board {
          if(clColLeft == plCol && clRow == plRow) {
                 playerGo = true;
             }
-        
         if(clColRight == plCol && clRow == plRow) {
                 playerGo = true;    
             }
         }
-        
+    
         if(clsq.weaponObj) {
            let playerObj = this.player;
-            playerObj.weaponAcquisition = clsq.weaponObj;
-           }
-        
-        if(this._nearbyPlayerDetection(pos)) {
-            this._startFightMode(pos);
+            playerObj.weapon = clsq.weaponObj;
+            
+            switch(this.player) {
+                case this.playerOne:
+                    this.scoreBoard_P1.weaponImg = clsq.weaponObj;
+                    this.playerOneWeapon = clsq.weaponObj;
+                    break;
+                case this.playerTwo:
+                    this.scoreBoard_P2.weaponImg = clsq.weaponObj;
+                    this.playerTwoWeapon = clsq.weaponObj;
+                    break;
+            }
         }
+        
+        switch(this.player) {
+                case this.playerOne:
+                let fightOne = this._nearbyPlayerDetectionFight(clickLocation, this.playerTwo);
+                console.log(fightOne);
+                if(fightOne) {
+                    this.startFightMode(this.playerOne);
+                }
+                    break;
+                case this.playerTwo:
+                let fightTwo = this._nearbyPlayerDetectionFight(clickLocation, this.playerOne);
+                console.log(fightTwo);
+                if(fightTwo) {
+                    this.startFightMode(this.playerTwo);
+                }
+                    break;
+            }
+        
         
         return playerGo;    
     }
@@ -326,26 +373,78 @@ export class Board {
         case this.playerOne:
             this.player = this.playerTwo;
             this.position = this.playerTwo.position;
-//            this._playerVisualGuide();
+            $('td').removeClass('guide');
+            this._playerVisualGuide(this.position);
                 break;
         case this.playerTwo:
             this.player = this.playerOne;
             this.position = this.playerOne.position;
-//            this._playerVisualGuide();
+             $('td').removeClass('guide');
+            this._playerVisualGuide(this.position);
                 break;
         } 
     }
+    
 
     
-    _startFightMode() {
-        let playerOne = this.playerOne;
-        let playerTwo = this.playerTwo;
+    startFightMode(firstMovePlayer) {
         
+        let p1 = this.playerOne;
+        let p2 = this.playerTwo;
+        let p1Weapon = this.playerOneWeapon;
+        let p2Weapon = this.playerTwoWeapon;
+        this.scoreBoard_P1.board = this;
+        this.scoreBoard_P2.board = this;
+//        console.log(this.scoreBoard_P1.board);
+//        console.log(this.scoreBoard_P2.board);
+        this.scoreBoard_P1.playerObj = p1;
+        this.scoreBoard_P2.playerObj = p2;
         
+        /*Initiate triger mode on Score board - buttons are now visible*/
+        
+        switch(firstMovePlayer) {
+        case p1:
+//            this.scoreBoard_P2.board = this;
+                console.log(this.scoreBoard_P2.board);
+            this.scoreBoard_P2.fightMode = p2;
+                break;
+        case p2:
+//            this.scoreBoard_P1.board = this;
+                console.log(this.scoreBoard_P1.board);
+            this.scoreBoard_P1.fightMode = p1;
+                break;
+        } 
         
     }
      
 }
+
+//
+//_nearbyPlayerDetection(playerTwoPos) {
+//        
+//        let pos = this.position;
+//        let playerTwoRow = playerTwoPos.row;
+//        let playerTwoCol = playerTwoPos.col;
+//        let validated = false;
+//        let leftSquare = pos.col-1;
+//        let rightSquare = pos.col+1;
+//        let upperSquare = pos.row-1;
+//        let lowerSquare = pos.row+1;
+//        
+//        console.log(this.position);
+//        
+//        if(playerTwoRow == pos.row && (playerTwoCol == leftSquare || playerTwoCol == rightSquare)) {
+//        validated = true;
+//        console.log('match made'+validated);
+//        }
+//            
+//        if(playerTwoCol == pos.col && (playerTwoRow == upperSquare || playerTwoRow == lowerSquare)) {
+//        validated = true;
+//        console.log('match made'+validated);  
+//        }
+//
+//        return validated;
+//    }
 
     
 //    newGame() {
@@ -497,4 +596,48 @@ export class Board {
 //                case pos:
 //                validated = true;
 //        }
+
+//    _fightModeDetection(otherPlayer/*click event position*/) {
+//        
+//        switch(this.position) {
+//                case this.playerOne:
+//                let oponent = this.playerTwo;
+//                console.log('player one')
+//        
+//                    break;
+//                case this.playerTwo:
+//                let oponent = this.playerOne;
+//                console.log('player two')
+//     
+//                    break;
+//        }
+//        let pos = oponent.position;
+//        console.log(pos);
+//        let playerTwoRow = otherPlayer.row;
+//        let playerTwoCol = otherPlayer.col;
+//        let validated = false;
+//        let leftSquare = pos.col-1;
+//        let rightSquare = pos.col+1;
+//        let upperSquare = pos.row-1;
+//        let lowerSquare = pos.row+1;
+//        
+//        console.log('player detection intiated');
+//          
+////        let leftSquare = { row: pos.row, col: pos.col-1 };
+////        let rightSquare = { row: pos.row, col: pos.col+1 };
+////        let upperSquare = { row: pos.row-1, col: pos.col };
+////        let lowerSquare = { row: pos.row+1, col: pos.col };
+//        
+//        if(playerTwoRow == pos.row && (playerTwoCol == leftSquare || playerTwoCol == rightSquare)) {
+//        validated = true;
+//        console.log('match made');
+//        }
+//            
+//        if(playerTwoCol == pos.col && (playerTwoRow == upperSquare || playerTwoRow == lowerSquare)) {
+//        validated = true;
+//        console.log('match made');  
+//        }
+//
+//        return validated+console.log(validated);
+//    }
 

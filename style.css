@@ -31,7 +31,11 @@ div {
 }
 
 button {
-    margin: 3px;
+    margin: 6px;
+/*
+    height: inherit;
+    width
+*/
 }
 
 .wrapper {
@@ -178,7 +182,7 @@ label {
 }
 
 #fireButton1 {
-        margin-left: 20%;
+        margin-left: 10%;
         
 }
 
@@ -191,7 +195,7 @@ label {
 }
 
 #fireButton2 {
-        margin-left: 20%;
+        margin-left: 10%;
 }
 
 #escapeButton2 {

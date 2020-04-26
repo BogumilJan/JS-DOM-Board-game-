@@ -9,48 +9,58 @@
     constructor(weaponType) {
 
         this.id = '';
+        this.name = null;
         this.weaponId = weaponType;
         this.weapon = null;
         this.position = null;
+        this.power = null;
+        this.picture = '';
         this.elem = this._createView();
-        this.weaponArray = [];
-        this.currentDamage = null;
+        
         // 
     }
      
     _wristSlap() {
         let elem = $('<div>').addClass('weapon').html('<img src="wrist.jpg" style="height:100%; width:100%;">');
         let wrist = 0;
+        this.name = 'wrist slap';
         this.weapon = wrist;
-        this.currentDamage = 20;
-        console.log(this.currentDamage);
+        this.power = 20;
+        this.picture = 'wrist.jpg';
+//        console.log(this.power);
         return elem;
     }
      
     _choke() {
         let elem = $('<div>').addClass('weapon').html('<img src="choke.jpg" style="height:100%; width:100%;">');
         let choke = 1;
+        this.name = 'jujitsu choke';
         this.weapon = choke;
-        this.currentDamage = 30;
-        console.log(this.currentDamage);
+        this.power = 30;
+        this.picture = 'choke.jpg';
+//        console.log(this.power);
         return elem;
     }
     
     _theBat() {
         let elem = $('<div>').addClass('weapon').html('<img src="bat.jpg" style="height:100%; width:100%;">');
         let bat = 2;
+        this.name = 'knock out';
         this.weapon = bat;
-        this.currentDamage = 40;
-        console.log(this.currentDamage);
+        this.power = 40;
+        this.picture = 'bat.jpg';
+//        console.log(this.power);
         return elem;
     }
      
     _theGun() {
         let elem = $('<div>').addClass('weapon').html('<img src="gun.jpg" style="height:100%; width:100%;">');
         let gun = 3;
+        this.name = 'assasination';
         this.weapon = gun;
-        this.currentDamage = 60;
-        console.log(this.currentDamage);
+        this.power = 60;
+        this.picture = 'gun.jpg';
+//        console.log(this.power);
         return elem;
     }
      
