@@ -84,11 +84,12 @@ get fightMode() {
 
 set fightMode(p) {
         
+        let board = this.board;
         let playerOne = this.board.playerOne;
         let playerTwo = this.board.playerTwo;
-        console.log(this.board.scoreBoard_P1.name);
+//        console.log(this.board.scoreBoard_P1.name);
         
-        let board = this.board;
+       
         
         switch(this.divID) {
             case board.scoreBoard_P1.divID:
@@ -107,6 +108,10 @@ set fightMode(p) {
         
         this.escapeButton = $('<div>').attr('id', 'escapeButton'+this.divID).addClass('w3-button w3-red w3-round').html('DEFEND');
     
+        $('#'+this.divID).append(this.fireField);
+        $('#'+this.divID).append(this.fireButton);
+        $('#'+this.divID).append(this.escapeButton);
+    
         this.fireButton.click(function(){
             
             switch(p.name) {
@@ -115,7 +120,7 @@ set fightMode(p) {
                 board.scoreBoard_P2.life = p.firePower;
                 board.playerTwo = p;
                     console.log(board.playerTwo);
-                board.startFightMode(p);
+                board.scoreBoard_P2.fightMode = p;
                 
                     break;
             case board.scoreBoard_P2.name:
@@ -123,14 +128,12 @@ set fightMode(p) {
                 board.scoreBoard_P1.life = p.firePower;
                 board.playerOne = p;
                     console.log(board.playerOne);
-                board.startFightMode(p);
+                board.scoreBoard_P1.fightMode = p;
                     break;
             } 
         });   
           
-        $('#'+this.divID).append(this.fireField);
-        $('#'+this.divID).append(this.fireButton);
-        $('#'+this.divID).append(this.escapeButton);
+        
     }
     
 get weaponImg() {

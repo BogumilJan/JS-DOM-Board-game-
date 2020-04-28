@@ -33,7 +33,7 @@ export class Board {
     }
 
     _createModel() {
-        var model = [];  // model[2][3] is row 3, column 4 (since first row is 0)
+        var model = []; 
 
         for (let r=0; r<this.size; r++) {
             model.push( [] ); 
@@ -82,12 +82,10 @@ export class Board {
      
 
     getSquare(row, col) {
-        // test for existing square if is outside return null
-        // if more tgen zero x < 0
-        if(row > this.size || col > this.size || row < 0 || col < 0) {
+        if(row<0 || row>9 || col<0 || col>9) {
             return false;
-        } else {
-            return this.model[row][col];
+        } else { 
+        return this.model[row][col]; 
         }
     }
 
@@ -160,7 +158,6 @@ export class Board {
         }
         sq.block = b;
         this.blockObjArray.push(sq.location);
-//        console.log(this.scoreBoard_P1);
     }
     
     addWeapon(weapon) {
@@ -172,9 +169,6 @@ export class Board {
             sq = this.getSquare(pos.row, pos.col);
         }
         sq.weapon = weapon;
-    
-//        this.weapon = weapon;
-//        console.log(weapon.power);
     }
 
     addPlayerOne(player) { 
@@ -210,9 +204,7 @@ export class Board {
         this.playerPosition.push(pos);
         sq.player = player;                               
         this.playerTwo = player;
-//        this._playerVisualGuide(pos);
         this.playerObjArray.push(player);
-//        console.log(pos);
     }
     
     _nearbyPlayerDetection(playerTwoPos) {
@@ -273,17 +265,9 @@ export class Board {
         
         let clickLocation = pos;
         let playerLocation = this.position;
-//        console.log(this.player);
-        
         let plsq = this.getSquare(playerLocation.row, playerLocation.col);
-//        let plObj = this.player;
-//        let weaponObj = this.weapon;
-//        console.log(pos.row + ' testing valid move');
         let clsq = this.getSquare(pos.row, pos.col);
-//        let clElem = weaponObj.position;
-//        console.log(clickIdString);
-        let clBlock = 0;
-//       
+        
 //            let clRowUp = clickLocation.row - 1;
 //            let clRowDown = clickLocation.row + 1;
 //            let clColLeft = clickLocation.col + 1;
@@ -303,7 +287,16 @@ export class Board {
         for(i=1;i<=3;i++) {
 /*Vertical movement verification logic ****************************************/
         
-        if(!clsq.block) {
+        let sqBlockUp = this.getSquare((clRowUp - i)+1, clCol);
+        let sqBlockDown = this.getSquare((clRowDown + i)-1, clCol);
+        let sqBlockLeft = this.getSquare((clColLeft - i)-1, clCol);
+        let sqBlockRight = this.getSquare((clColRight + i)+1, clCol);
+        let sqBlockUp2 = this.getSquare((clRowUp - i)+2, clCol);
+        let sqBlockDown2 = this.getSquare((clRowDown + i)-2, clCol);
+        let sqBlockLeft2 = this.getSquare((clColLeft - i)-2, clCol);
+        let sqBlockRight2 = this.getSquare((clColRight + i)+2, clCol);
+        
+        if(!clsq.block && !sqBlockDown.block && !sqBlockUp.block && !sqBlockDown2.block && !sqBlockUp2.block) {
         if((clRowUp - i) == plRow && clCol == plCol) {
                 playerGo = true;
             }
@@ -314,7 +307,7 @@ export class Board {
         
 /*Horizontal movement verification logic *************************************/  
         
-        if(!clsq.block) {
+        if(!clsq.block && !sqBlockLeft.block && !sqBlockRight.block && !sqBlockLeft2.block && !sqBlockRight2.block) {
          if((clColLeft - i) == plCol && clRow == plRow) {
                 playerGo = true;
             }
@@ -323,6 +316,7 @@ export class Board {
             }
         }
         }
+        
         if(clsq.weaponObj) {
            let playerObj = this.player;
             playerObj.weapon = clsq.weaponObj;
@@ -426,6 +420,8 @@ export class Board {
     }
      
 }
+
+//&& !sqBlockLeft.block && !sqBlockRight.block && !sqBlockLeft2.block && !sqBlockRight2.block
 
 //
 //_nearbyPlayerDetection(playerTwoPos) {
