@@ -13,6 +13,7 @@ export class Square {
             this.playerObj = null;
             this._blockObj = null;
             this.weaponObj = null;
+            this.playerActive = false;
             this.col = col;
             this.row = row;
             this.elem = this._createView();
@@ -35,6 +36,7 @@ export class Square {
     set player(player) {
         
             this.playerObj = player;
+            this.playerActive = true;
             if (player) {
                 $('#'+this.id).empty();
                 $('#'+this.id).append(player.elem);
